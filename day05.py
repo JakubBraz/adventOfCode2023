@@ -15,9 +15,9 @@ def parse_range(range_map):
     return ranges
 
 
-def map_value(val, ranges, swap_dest_src = False):
+def map_value(val, ranges):
     for r in ranges:
-        source, dest, size = r if swap_dest_src else (r[1], r[0], r[2])
+        dest, source, size = r
         if source <= val < source + size:
             return dest + (val - source)
     return val
@@ -31,10 +31,10 @@ def solve1(parsed):
 
 def solve2(parsed):
     seeds, ranges = parsed
-    ranges = list(reversed(ranges))
+    ranges = [[(src, dst, size) for dst, src, size in r] for r in reversed(ranges)]
     seed_range = [(seeds[i], seeds[i+1]) for i in range(0, len(seeds), 2)]
     for i in range(4_000_000_000):
-        res = reduce(lambda acc, val: map_value(acc, val, True), ranges, i)
+        res = reduce(lambda acc, val: map_value(acc, val), ranges, i)
         if any(s[0] <= res < s[0] + s[1] for s in seed_range):
             return i
 
