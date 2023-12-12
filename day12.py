@@ -8,8 +8,7 @@ def parse_input(inp):
 def find_all(to_find: str, s: str):
     res = []
     last = -1
-    while s.find(to_find, last+1) > -1:
-        i = s.find(to_find, last+1)
+    while (i := s.find(to_find, last+1)) > -1:
         last = i
         res.append(i)
     return res
@@ -32,8 +31,6 @@ def solve_row(row, nums, memo):
     if not nums and '#' not in row:
         return 1
     if not nums:
-        return 0
-    if len(row) < nums[0]:
         return 0
     indices = possible(row, nums[0])
     memo[t] = sum(solve_row(row[i + nums[0] + 1:], nums[1:], memo) for i in indices)
