@@ -5,15 +5,6 @@ def parse_input(inp):
     return inp
 
 
-def find_all(to_find: str, s: str):
-    res = []
-    last = -1
-    while (i := s.find(to_find, last+1)) > -1:
-        last = i
-        res.append(i)
-    return res
-
-
 def possible(row: str, n: int):
     return [i for i in range(0, len(row) - n + 1)
             if (
